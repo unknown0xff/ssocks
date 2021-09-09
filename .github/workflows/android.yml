@@ -44,5 +44,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ssocks
-        path: ${{github.workspace}}/build
+        path: ${{github.workspace}}/*
       
