@@ -40,5 +40,9 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
           --build ${{github.workspace}}/build
 
-
+    - name: Pack artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ssocks
+        path: ${{github.workspace}}/build
       
