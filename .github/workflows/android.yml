@@ -22,8 +22,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: nttld/setup-ndk@v1
+      id: setup-ndk
       with:
         ndk-version: r21e
+      env:
+        ANDROID_NDK: ${{ steps.setup-ndk.outputs.ndk-path }}
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
