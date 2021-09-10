@@ -21,7 +21,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-                
+    - name: test Env0
+      run:  sdkmanager --list
+      
+      
     - name: Install NDK
       run: sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;21" --channe 0
       
