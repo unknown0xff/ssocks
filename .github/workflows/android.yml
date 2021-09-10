@@ -9,6 +9,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   NDK_BUILD_TYPE: arm64-v8a
+  NDK_PATH: /usr/local/lib/android/sdk/ndk
 
 jobs:
   build:
@@ -20,27 +21,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Prepare NDK dir for caching ( workaround for https://github.com/actions/virtual-environments/issues/1337 )
-      run: |
-        sudo mkdir -p /usr/local/lib/android/sdk/ndk
-        sudo chmod -R 777 /usr/local/lib/android/sdk/ndk
-        sudo chown -R $USER:$USER /usr/local/lib/android/sdk/ndk
-        sudo apt -y install make
-             
+                
     - name: Install NDK
-      if: steps.ndk-cache.outputs.cache-hit != 'true'
-      run: echo "y" | sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;21.0.6113669"
-
+      run: sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;21" --channe 0
+      
+    - name: test Env
+      run: ls ${{env.NDK_PATH}}
+      
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build   -DANDROID_ABI=${{NDK_BUILD_TYPE}}   -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/21.4.7075529/build/cmake/android.toolchain.cmake
+      run: cmake -B ${{github.workspace}}/build   -DANDROID_ABI=${{env.NDK_BUILD_TYPE}}   -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/21.4.7075529/build/cmake/android.toolchain.cmake
 
           
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build -DANDROID_ABI=${{NDK_BUILD_TYPE}} 
+      run: cmake --build ${{github.workspace}}/build -DANDROID_ABI=${{env.NDK_BUILD_TYPE}} 
       
     - name: Pack artifact
       uses: actions/upload-artifact@v2
