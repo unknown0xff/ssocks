@@ -26,6 +26,7 @@ jobs:
       run: sudo ${{env.ANDROID_SDK_PATH}}/tools/bin/sdkmanager --install "ndk;${{env.NDK_VERSION}}" 
             
     - name: Configure CMake
+      # Github CI run 命令的换行规则暂时还弄不清楚,换行后 CMake 命令执行失败,也可能是CMAKE BUG...
       run: cmake -B ${{github.workspace}}/build -DANDROID_ABI=${{env.NDK_BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE=${{env.NDK_PATH}}/${{env.NDK_VERSION}}/build/cmake/android.toolchain.cmake
           
     - name: CMake Build
