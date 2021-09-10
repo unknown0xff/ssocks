@@ -11,8 +11,8 @@ env:
   ANDROID_SDK_PATH: /usr/local/lib/android/sdk
   NDK_BUILD_TYPE: arm64-v8a
   NDK_PATH: /usr/local/lib/android/sdk/ndk
-  #NDK 最新的稳定版本 23.0.7599858
-  NDK_VERSION: 23.0.7599858
+  #Github 的NDK安装有点毛病,只能指定 21.4.7075529, 而 NDK 最新的稳定版本 23.0.7599858
+  NDK_VERSION: 21.4.7075529
   
 
 jobs:
