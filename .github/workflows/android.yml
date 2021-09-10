@@ -8,7 +8,7 @@ on:
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
+  NDK_BUILD_TYPE: arm64-v8a
 
 jobs:
   build:
@@ -35,12 +35,12 @@ jobs:
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build   -DANDROID_ABI=arm64-v8a   -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/21.4.7075529/build/cmake/android.toolchain.cmake
+      run: cmake -B ${{github.workspace}}/build   -DANDROID_ABI=${{NDK_BUILD_TYPE}}   -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/21.4.7075529/build/cmake/android.toolchain.cmake
 
           
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build
+      run: cmake --build ${{github.workspace}}/build -DANDROID_ABI=${{NDK_BUILD_TYPE}} 
       
     - name: Pack artifact
       uses: actions/upload-artifact@v2
