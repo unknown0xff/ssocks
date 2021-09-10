@@ -28,12 +28,12 @@ jobs:
         sudo chown -R $USER:$USER /usr/local/lib/android/sdk/ndk
         sudo apt -y install make
       
-    - name: NDK Cache
-      id: ndk-cache
-      uses: actions/cache@v1
-      with:
-        path: /usr/local/lib/android/sdk/ndk
-        key: ndk-cache-21.0.6113669-v2
+#    - name: NDK Cache
+#      id: ndk-cache
+#      uses: actions/cache@v1
+#      with:
+#        path: /usr/local/lib/android/sdk/ndk
+#        key: ndk-cache-21.0.6113669-v2
         
     - name: Install NDK
       if: steps.ndk-cache.outputs.cache-hit != 'true'
